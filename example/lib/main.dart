@@ -20,6 +20,7 @@ class RequestApp extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(4)),
           ),
+          constraints: BoxConstraints(maxHeight: 42),
           contentPadding: EdgeInsets.symmetric(horizontal: 12),
         ),
         iconButtonTheme: IconButtonThemeData(
@@ -27,7 +28,6 @@ class RequestApp extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(4),
             ),
-            // backgroundColor: Colors.blue,
             iconSize: 24,
           ),
         ),

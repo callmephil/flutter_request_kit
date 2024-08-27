@@ -31,6 +31,10 @@ class SearchField extends StatelessWidget {
               Expanded(
                 child: TextField(
                   onChanged: onSearchChanged,
+                  decoration: InputDecoration(
+                    hintText: context.locale.search_request,
+                    suffixIcon: const Icon(Icons.search),
+                  ),
                 ),
               ),
               const SizedBox(width: RequestSizes.s4),

@@ -8,7 +8,6 @@ class RequestCustomTheme {
   const RequestCustomTheme._();
 
   static final defaultTheme = ThemeData(
-    primarySwatch: Colors.blue,
     extensions: const [
       RequestStatusPillTheme(),
       RequestVotingBoxTheme(),
