@@ -48,7 +48,7 @@ class RequestVotingBox extends StatelessWidget {
                 size: theme?.iconSize ?? RequestSizes.s16,
               ),
               Text(
-                item.upvotes.length.toString(),
+                item.votes.length.toString(),
                 style: theme?.textStyle ??
                     const TextStyle(
                       color: RequestColors.grey,

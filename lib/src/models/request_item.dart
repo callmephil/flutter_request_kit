@@ -10,7 +10,7 @@ class RequestItem {
   final DateTime createdAt;
   final DateTime updatedAt;
   final List<Comment> comments;
-  final List<Upvote> upvotes;
+  final List<Vote> votes;
   final RequestStatus status;
 
   const RequestItem({
@@ -21,7 +21,7 @@ class RequestItem {
     required this.createdAt,
     required this.updatedAt,
     this.comments = const [],
-    this.upvotes = const [],
+    this.votes = const [],
     this.status = RequestStatus.none,
   });
 
@@ -33,7 +33,7 @@ class RequestItem {
     DateTime? createdAt,
     DateTime? updatedAt,
     List<Comment>? comments,
-    List<Upvote>? upvotes,
+    List<Vote>? votes,
     RequestStatus? status,
   }) {
     return RequestItem(
@@ -44,7 +44,7 @@ class RequestItem {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       comments: comments ?? this.comments,
-      upvotes: upvotes ?? this.upvotes,
+      votes: votes ?? this.votes,
       status: status ?? this.status,
     );
   }
@@ -58,7 +58,7 @@ class RequestItem {
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
       'comments': comments.map((comment) => comment.toJson()).toList(),
-      'upvotes': upvotes.map((upvote) => upvote.toJson()).toList(),
+      'votes': votes.map((upvote) => upvote.toJson()).toList(),
       'status': status.name,
     };
   }
@@ -74,8 +74,8 @@ class RequestItem {
       comments: (json['comments'] as List<dynamic>)
           .map((item) => Comment.fromJson(item))
           .toList(),
-      upvotes: (json['upvotes'] as List<dynamic>)
-          .map((item) => Upvote.fromJson(item))
+      votes: (json['votes'] as List<dynamic>)
+          .map((item) => Vote.fromJson(item))
           .toList(),
       status: RequestStatus.values
           .firstWhere((e) => e.toString().split('.').last == json['status']),
@@ -94,7 +94,7 @@ class RequestItem {
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt &&
         other.comments == comments &&
-        other.upvotes == upvotes &&
+        other.votes == votes &&
         other.status == status;
   }
 
@@ -107,12 +107,12 @@ class RequestItem {
         createdAt.hashCode ^
         updatedAt.hashCode ^
         comments.hashCode ^
-        upvotes.hashCode ^
+        votes.hashCode ^
         status.hashCode;
   }
 
   @override
   String toString() {
-    return 'RequestItem(id: $id, creator: $creator, title: $title, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, comments: $comments, upvotes: $upvotes, status: $status)';
+    return 'RequestItem(id: $id, creator: $creator, title: $title, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, comments: $comments, votes: $votes, status: $status)';
   }
 }

@@ -1,18 +1,18 @@
 import 'package:flutter/foundation.dart';
 
 @immutable
-class Upvote {
+class Vote {
   final String userId;
 
-  const Upvote({
+  const Vote({
     required this.userId,
   });
 
-  Upvote copyWith({
+  Vote copyWith({
     String? userId,
     DateTime? createdAt,
   }) {
-    return Upvote(
+    return Vote(
       userId: userId ?? this.userId,
     );
   }
@@ -24,8 +24,8 @@ class Upvote {
     };
   }
 
-  static Upvote fromJson(Map<String, dynamic> json) {
-    return Upvote(
+  static Vote fromJson(Map<String, dynamic> json) {
+    return Vote(
       userId: json['userId'],
     );
   }
@@ -34,7 +34,7 @@ class Upvote {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Upvote && other.userId == userId;
+    return other is Vote && other.userId == userId;
   }
 
   @override

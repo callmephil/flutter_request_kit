@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_request_kit/flutter_request_kit.dart';
 import 'package:flutter_request_kit/src/extension/provider_extensions.dart';
-import 'package:flutter_request_kit/src/services/services.dart';
+import 'package:flutter_request_kit/src/i18n/i18n.dart';
+import 'package:flutter_request_kit/src/i18n/localization_provider.dart';
 import 'package:flutter_request_kit/src/theme/request_sizes.dart';
-
-import '../enums/enums.dart';
-import '../models/models.dart';
 
 void showRequestFormPage(
   BuildContext context, {
+  required I18n locale,
   RequestItem? request,
-  RequestService? requestService,
   required Function(RequestItem) onSave,
   void Function()? onDelete,
   required Creator creator,
@@ -18,20 +17,22 @@ void showRequestFormPage(
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) {
-        return RequestFormPage(
-          request: request,
-          onSave: (newRequest) {
-            if (request == null) {
-              requestService?.addRequest(newRequest);
-            } else {
-              requestService?.updateRequest(newRequest.id, newRequest);
-            }
-            onSave.call(newRequest);
-            Navigator.of(context).pop();
-          },
-          onDelete: onDelete,
-          creator: creator,
+      builder: (_) {
+        return LocalizationProvider(
+          locale: locale,
+          child: Builder(
+            builder: (context) {
+              return RequestFormPage(
+                request: request,
+                onSave: (request) {
+                  onSave.call(request);
+                  Navigator.of(context).pop();
+                },
+                onDelete: onDelete,
+                creator: creator,
+              );
+            },
+          ),
         );
       },
     ),
@@ -83,7 +84,7 @@ class RequestFormPage extends StatelessWidget {
 class RequestFormWidget extends StatefulWidget {
   final RequestItem? request;
   final Function(RequestItem) onSave;
-  final Creator creator; // Current user as the creator
+  final Creator creator;
 
   const RequestFormWidget({
     super.key,

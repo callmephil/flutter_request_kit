@@ -30,11 +30,6 @@ class SearchField extends StatelessWidget {
             children: [
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(
-                    hintText: context.locale.search_request,
-                    border: const OutlineInputBorder(),
-                    prefixIcon: const Icon(Icons.search),
-                  ),
                   onChanged: onSearchChanged,
                 ),
               ),

@@ -1,15 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_request_kit/flutter_request_kit.dart';
 import 'package:flutter_request_kit/src/extension/provider_extensions.dart';
 import 'package:flutter_request_kit/src/extension/request_date_time_extension.dart';
+import 'package:flutter_request_kit/src/i18n/i18n.dart';
+import 'package:flutter_request_kit/src/i18n/localization_provider.dart';
 import 'package:flutter_request_kit/src/theme/request_sizes.dart';
 
-import '../models/models.dart';
+void showRequestCommentsBottomSheet({
+  required BuildContext context,
+  required RequestItem request,
+  required Creator currentUser,
+  required I18n locale,
+}) {
+  showModalBottomSheet(
+    context: context,
+    useSafeArea: true,
+    isScrollControlled: true,
+    constraints: BoxConstraints(
+      minHeight: MediaQuery.sizeOf(context).height * .8,
+      maxHeight: MediaQuery.sizeOf(context).height * .8,
+    ),
+    builder: (_) {
+      return LocalizationProvider(
+        locale: locale,
+        child: Builder(
+          builder: (context) {
+            return RequestComments(
+              request: request,
+              currentUser: currentUser,
+              onAddComment: (comment) {
+                AddComment(request.id, comment);
+              },
+            );
+          },
+        ),
+      );
+    },
+  );
+}
 
 class RequestComments extends StatefulWidget {
   final RequestItem request;
   final Function(Comment)? onAddComment;
-  final Function() onUpvote;
-  final Function() onRemoveUpvote;
   final Creator currentUser;
 
   const RequestComments({
@@ -17,8 +49,6 @@ class RequestComments extends StatefulWidget {
     required this.request,
     required this.currentUser,
     this.onAddComment,
-    required this.onUpvote,
-    required this.onRemoveUpvote,
   });
 
   @override

@@ -8,11 +8,7 @@ class RequestCustomTheme {
   const RequestCustomTheme._();
 
   static final defaultTheme = ThemeData(
-    inputDecorationTheme: const InputDecorationTheme(
-      border: OutlineInputBorder(
-        borderRadius: RequestSizes.borderRadius4,
-      ),
-    ),
+    primarySwatch: Colors.blue,
     extensions: const [
       RequestStatusPillTheme(),
       RequestVotingBoxTheme(),

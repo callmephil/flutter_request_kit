@@ -8,21 +8,19 @@ import 'package:flutter_request_kit/src/widgets/components/request_item_card.dar
 class RequestListWidget extends StatelessWidget {
   final List<RequestItem> requestList;
   final String currentUserId;
-  final void Function(RequestItem) onRequestSelected;
-  final void Function(RequestItem) onUpvote;
-  final void Function(RequestItem) onRemoveUpvote;
-  final void Function(RequestItem)? onLongPress;
   final Future<void> Function() onRefresh;
+  final void Function(RequestItem) onRequestSelected;
+  final void Function(RequestItem) onVoteChange;
+  final void Function(RequestItem)? onLongPress;
 
   const RequestListWidget({
     super.key,
     required this.requestList,
-    required this.onRequestSelected,
-    required this.onUpvote,
-    required this.onRemoveUpvote,
     required this.currentUserId,
-    this.onLongPress,
     required this.onRefresh,
+    required this.onRequestSelected,
+    required this.onVoteChange,
+    this.onLongPress,
   });
 
   @override
@@ -41,29 +39,22 @@ class RequestListWidget extends StatelessWidget {
       onRefresh: onRefresh,
       child: ListView.separated(
         padding: const EdgeInsets.all(RequestSizes.s8),
+        physics: const AlwaysScrollableScrollPhysics(),
         itemCount: requestList.length,
         separatorBuilder: (context, index) {
           return const SizedBox(height: RequestSizes.s16);
         },
         itemBuilder: (context, index) {
           final request = requestList[index];
-          final userUpvoted = request.upvotes.any(
-            (u) => u.userId == currentUserId,
-          );
-
           return RequestItemCard(
             item: request,
-            onTap: () {
-              onRequestSelected(request);
-            },
+            onTap: () => onRequestSelected(request),
             onLongPress: onLongPress == null
                 ? null
                 : () {
                     onLongPress?.call(request);
                   },
-            onVote: () {
-              userUpvoted ? onRemoveUpvote(request) : onUpvote(request);
-            },
+            onVote: () => onVoteChange(request),
           );
         },
       ),

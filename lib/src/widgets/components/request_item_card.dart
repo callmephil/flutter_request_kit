@@ -1,5 +1,3 @@
-// request_item_card.dart
-
 import 'package:flutter/material.dart';
 import 'package:flutter_request_kit/src/enums/enums.dart';
 import 'package:flutter_request_kit/src/extension/provider_extensions.dart';
@@ -49,60 +47,10 @@ class RequestItemCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          item.title,
-                          style: theme?.titleTextStyle ??
-                              context.theme.textTheme.titleLarge,
-                        ),
-                        // createdAt
-                        const SizedBox(width: RequestSizes.s4),
-                        Text(
-                          item.createdAt.toRequestDateTime,
-                          style: theme?.titleTextStyle ??
-                              context.theme.textTheme.labelSmall?.copyWith(
-                                fontWeight: FontWeight.w200,
-                              ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      item.description,
-                      maxLines: 3,
-                      style: theme?.descriptionTextStyle ??
-                          const TextStyle(color: RequestColors.grey600),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    RequestItemTitle(item: item),
+                    RequestItemDescription(item: item),
                     const SizedBox(height: RequestSizes.s8),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.chat_bubble_outline_outlined,
-                          size: theme?.iconSize ?? RequestSizes.s16,
-                          color: theme?.iconColor ?? RequestColors.grey600,
-                        ),
-                        const SizedBox(width: RequestSizes.s4),
-                        Text(
-                          item.comments.length.toString(),
-                          style: theme?.commentsTextStyle ??
-                              const TextStyle(
-                                color: RequestColors.grey600,
-                              ),
-                        ),
-                        if (item.status != RequestStatus.none)
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(RequestSizes.s8),
-                                child: Text(theme?.separatorText ?? '-'),
-                              ),
-                              RequestStatusPill(status: item.status),
-                            ],
-                          )
-                      ],
-                    ),
+                    RequestItemComments(item: item),
                   ],
                 ),
               ),
@@ -112,6 +60,102 @@ class RequestItemCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class RequestItemTitle extends StatelessWidget {
+  const RequestItemTitle({
+    super.key,
+    required this.item,
+  });
+
+  final RequestItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.theme.extension<RequestItemCardTheme>();
+
+    return Row(
+      children: [
+        Text(
+          item.title,
+          style: theme?.titleTextStyle ?? context.theme.textTheme.titleLarge,
+        ),
+        const SizedBox(width: RequestSizes.s4),
+        Text(
+          item.createdAt.toRequestDateTime,
+          style: theme?.titleTextStyle ??
+              context.theme.textTheme.labelSmall?.copyWith(
+                fontWeight: FontWeight.w200,
+              ),
+        ),
+      ],
+    );
+  }
+}
+
+class RequestItemDescription extends StatelessWidget {
+  const RequestItemDescription({
+    super.key,
+    required this.item,
+  });
+
+  final RequestItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.theme.extension<RequestItemCardTheme>();
+
+    return Text(
+      item.description,
+      maxLines: 3,
+      style: theme?.descriptionTextStyle ??
+          const TextStyle(color: RequestColors.grey600),
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+}
+
+class RequestItemComments extends StatelessWidget {
+  const RequestItemComments({
+    super.key,
+    required this.item,
+  });
+
+  final RequestItem item;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.theme.extension<RequestItemCardTheme>();
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.chat_bubble_outline_outlined,
+          size: theme?.iconSize ?? RequestSizes.s16,
+          color: theme?.iconColor ?? RequestColors.grey600,
+        ),
+        const SizedBox(width: RequestSizes.s4),
+        Text(
+          item.comments.length.toString(),
+          style: theme?.commentsTextStyle ??
+              const TextStyle(
+                color: RequestColors.grey600,
+              ),
+        ),
+        if (item.status != RequestStatus.none)
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(RequestSizes.s8),
+                child: Text(theme?.separatorText ?? '-'),
+              ),
+              RequestStatusPill(status: item.status),
+            ],
+          )
+      ],
     );
   }
 }
