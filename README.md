@@ -1,6 +1,6 @@
 # ⚠️ WORK IN PROGRESS ⚠️
 
-This project is being actively developed and therefore might rapidly changes. feel free to ask questions & contribute on Github.
+This project is being actively developed and therefore might rapidly change.
 
 # Flutter Request Kit
 

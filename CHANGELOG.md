@@ -1,3 +1,10 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+- Initial release & public demo.
+
+## 0.0.2
+
+- Fixed typo in the doc
+- Fixed typo in the readme
+- Added Repository (Github) url
+- Added Issue Tracker (Github) url
