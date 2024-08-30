@@ -1,7 +1,7 @@
 name: flutter_request_kit
-description: "A new Flutter package project."
+description: "A Flutter package that simplify the way you deal with feedbacks, requests and errors in your app."
 version: 0.0.1
-homepage: https://flutterrequestkit.web.app
+homepage: https://flutter-request-kit.web.app
 
 environment:
   sdk: ^3.5.0
