@@ -9,7 +9,7 @@ class RequestCustomTheme {
 
   static final defaultTheme = ThemeData(
     extensions: const [
-      RequestStatusPillTheme(),
+      RequestStatusPillTheme(plannedColor: Colors.red),
       RequestVotingBoxTheme(),
       RequestItemCardTheme(),
     ],
@@ -17,18 +17,6 @@ class RequestCustomTheme {
 }
 
 class RequestItemCardTheme extends ThemeExtension<RequestItemCardTheme> {
-  final Color? backgroundColor;
-  final Color? borderColor;
-  final double? borderWidth;
-  final BorderRadius? borderRadius;
-  final EdgeInsets? padding;
-  final TextStyle? titleTextStyle;
-  final TextStyle? descriptionTextStyle;
-  final TextStyle? commentsTextStyle;
-  final Color? iconColor;
-  final double? iconSize;
-  final String? separatorText;
-
   const RequestItemCardTheme({
     this.backgroundColor,
     this.borderColor,
@@ -42,6 +30,17 @@ class RequestItemCardTheme extends ThemeExtension<RequestItemCardTheme> {
     this.iconSize,
     this.separatorText,
   });
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final double? borderWidth;
+  final BorderRadius? borderRadius;
+  final EdgeInsets? padding;
+  final TextStyle? titleTextStyle;
+  final TextStyle? descriptionTextStyle;
+  final TextStyle? commentsTextStyle;
+  final Color? iconColor;
+  final double? iconSize;
+  final String? separatorText;
 
   @override
   RequestItemCardTheme copyWith({
@@ -74,7 +73,9 @@ class RequestItemCardTheme extends ThemeExtension<RequestItemCardTheme> {
 
   @override
   RequestItemCardTheme lerp(
-      ThemeExtension<RequestItemCardTheme>? other, double t) {
+    ThemeExtension<RequestItemCardTheme>? other,
+    double t,
+  ) {
     if (other is! RequestItemCardTheme) {
       return this;
     }
@@ -97,13 +98,6 @@ class RequestItemCardTheme extends ThemeExtension<RequestItemCardTheme> {
 }
 
 class RequestStatusPillTheme extends ThemeExtension<RequestStatusPillTheme> {
-  final TextStyle? textStyle;
-  final Color? inProgressColor;
-  final Color? completedColor;
-  final Color? plannedColor;
-  final BorderRadius? borderRadius;
-  final EdgeInsets? padding;
-
   const RequestStatusPillTheme({
     this.textStyle,
     this.inProgressColor = RequestColors.red300,
@@ -115,6 +109,12 @@ class RequestStatusPillTheme extends ThemeExtension<RequestStatusPillTheme> {
       horizontal: RequestSizes.s8,
     ),
   });
+  final TextStyle? textStyle;
+  final Color? inProgressColor;
+  final Color? completedColor;
+  final Color? plannedColor;
+  final BorderRadius? borderRadius;
+  final EdgeInsets? padding;
 
   @override
   RequestStatusPillTheme copyWith({
@@ -137,7 +137,9 @@ class RequestStatusPillTheme extends ThemeExtension<RequestStatusPillTheme> {
 
   @override
   RequestStatusPillTheme lerp(
-      ThemeExtension<RequestStatusPillTheme>? other, double t) {
+    ThemeExtension<RequestStatusPillTheme>? other,
+    double t,
+  ) {
     if (other is! RequestStatusPillTheme) {
       return this;
     }
@@ -153,15 +155,6 @@ class RequestStatusPillTheme extends ThemeExtension<RequestStatusPillTheme> {
 }
 
 class RequestVotingBoxTheme extends ThemeExtension<RequestVotingBoxTheme> {
-  final Color? backgroundColor;
-  final Color? borderColor;
-  final double? borderWidth;
-  final BorderRadius? borderRadius;
-  final EdgeInsets? padding;
-  final TextStyle? textStyle;
-  final Color? iconColor;
-  final double? iconSize;
-
   const RequestVotingBoxTheme({
     this.backgroundColor,
     this.borderColor,
@@ -172,6 +165,14 @@ class RequestVotingBoxTheme extends ThemeExtension<RequestVotingBoxTheme> {
     this.iconColor,
     this.iconSize,
   });
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final double? borderWidth;
+  final BorderRadius? borderRadius;
+  final EdgeInsets? padding;
+  final TextStyle? textStyle;
+  final Color? iconColor;
+  final double? iconSize;
 
   @override
   RequestVotingBoxTheme copyWith({
@@ -198,7 +199,9 @@ class RequestVotingBoxTheme extends ThemeExtension<RequestVotingBoxTheme> {
 
   @override
   RequestVotingBoxTheme lerp(
-      ThemeExtension<RequestVotingBoxTheme>? other, double t) {
+    ThemeExtension<RequestVotingBoxTheme>? other,
+    double t,
+  ) {
     if (other is! RequestVotingBoxTheme) {
       return this;
     }

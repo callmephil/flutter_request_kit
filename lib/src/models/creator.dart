@@ -2,21 +2,25 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class Creator {
-  final String userId;
-  final String username;
-  final bool isAdmin; // New field to indicate if the user is an admin
-
   const Creator({
     required this.userId,
     required this.username,
     this.isAdmin = false,
   });
 
-  Creator copyWith({
-    String? userId,
-    String? username,
-    bool? isAdmin,
-  }) {
+  factory Creator.fromJson(Map<String, dynamic> json) {
+    return Creator(
+      userId: json['userId'] as String,
+      username: json['username'] as String,
+      isAdmin: json['isAdmin'] as bool,
+    );
+  }
+
+  final String userId;
+  final String username;
+  final bool isAdmin;
+
+  Creator copyWith({String? userId, String? username, bool? isAdmin}) {
     return Creator(
       userId: userId ?? this.userId,
       username: username ?? this.username,
@@ -25,19 +29,7 @@ class Creator {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'userId': userId,
-      'username': username,
-      'isAdmin': isAdmin,
-    };
-  }
-
-  static Creator fromJson(Map<String, dynamic> json) {
-    return Creator(
-      userId: json['userId'],
-      username: json['username'],
-      isAdmin: json['isAdmin'] ?? false,
-    );
+    return {'userId': userId, 'username': username, 'isAdmin': isAdmin};
   }
 
   @override

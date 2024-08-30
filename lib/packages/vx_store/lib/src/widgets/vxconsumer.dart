@@ -1,22 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-
-import '../vxstate.dart';
-import 'vxnotifier.dart';
+import 'package:flutter_request_kit/packages/vx_store/lib/src/vxstate.dart';
+import 'package:flutter_request_kit/packages/vx_store/lib/src/widgets/vxnotifier.dart';
 
 /// A stream builder like widget that accepts
 /// mutations and rebuilds after their execution.
 class VxConsumer<T> extends StatefulWidget {
-  /// [builder] provides the child widget to rendered.
-  final VxStateWidgetBuilder<T> builder;
-
-  /// Widget will rerender every time any of [mutations] executes.
-  final Set<Type> mutations;
-
-  /// Map of mutations and their corresponding callback
-  final Map<Type, ContextCallback>? notifications;
-
   /// Creates widget to rerender child widgets when given
   /// [mutations] execute.
   const VxConsumer({
@@ -26,12 +16,21 @@ class VxConsumer<T> extends StatefulWidget {
     this.notifications,
   });
 
+  /// [builder] provides the child widget to rendered.
+  final VxStateWidgetBuilder<T> builder;
+
+  /// Widget will rerender every time any of [mutations] executes.
+  final Set<Type> mutations;
+
+  /// Map of mutations and their corresponding callback
+  final Map<Type, ContextCallback>? notifications;
+
   @override
-  State<VxConsumer> createState() => _VxConsumerState<T>();
+  State<VxConsumer<T>> createState() => _VxConsumerState<T>();
 }
 
 class _VxConsumerState<T> extends State<VxConsumer<T>> {
-  StreamSubscription? eventSub;
+  StreamSubscription<VxMutation>? eventSub;
 
   @override
   void initState() {
@@ -63,15 +62,15 @@ class _VxConsumerState<T> extends State<VxConsumer<T>> {
     );
     return StreamBuilder<VxMutation>(
       stream: stream,
-      builder: (context, mut) {
+      builder: (ctx, mut) {
         VxStatus? status;
         if (!mut.hasData || mut.connectionState == ConnectionState.waiting) {
           status = VxStatus.none;
         } else {
           status = mut.data?.status;
         }
-        final T store = VxState.store as T;
-        return widget.builder(context, store, status);
+        final store = VxState.store as T;
+        return widget.builder(ctx, store, status);
       },
     );
   }

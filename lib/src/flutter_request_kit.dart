@@ -1,11 +1,11 @@
 export 'enums/request_status.dart';
-export 'i18n/i18n_enum.dart';
+export 'i18n/request_kit_locales.dart';
 export 'models/comment.dart';
 export 'models/creator.dart';
 export 'models/request_item.dart';
 export 'models/vote.dart';
 export 'store/request_store.dart';
-export 'theme/custom_theme.dart';
+export 'theme/request_custom_theme.dart';
 export 'widgets/request_form_widget.dart';
 export 'widgets/request_list_widget.dart';
 export 'widgets/request_page.dart';

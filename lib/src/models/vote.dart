@@ -2,32 +2,19 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class Vote {
+  const Vote({required this.userId});
+
+  factory Vote.fromJson(Map<String, dynamic> json) {
+    return Vote(userId: json['userId'] as String);
+  }
   final String userId;
 
-  const Vote({
-    required this.userId,
-  });
-
-  Vote copyWith({
-    String? userId,
-    DateTime? createdAt,
-  }) {
-    return Vote(
-      userId: userId ?? this.userId,
-    );
+  Vote copyWith({String? userId}) {
+    return Vote(userId: userId ?? this.userId);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'userId': userId,
-      'createdAt': DateTime.now().toIso8601String(),
-    };
-  }
-
-  static Vote fromJson(Map<String, dynamic> json) {
-    return Vote(
-      userId: json['userId'],
-    );
+    return {'userId': userId, 'createdAt': DateTime.now().toIso8601String()};
   }
 
   @override
@@ -42,6 +29,6 @@ class Vote {
 
   @override
   String toString() {
-    return 'Upvote(userId: $userId)';
+    return 'Vote(userId: $userId)';
   }
 }

@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_request_kit/flutter_request_kit.dart';
-import 'package:flutter_request_kit/src/extension/provider_extensions.dart';
 import 'package:flutter_request_kit/src/i18n/i18n.dart';
 import 'package:flutter_request_kit/src/i18n/localization_provider.dart';
 import 'package:flutter_request_kit/src/widgets/components/search_field.dart';
-
-import 'request_comments_widget.dart';
+import 'package:flutter_request_kit/src/widgets/request_comments_widget.dart';
 
 class RequestPage extends StatefulWidget {
-  final Creator currentUser;
-  final I18n locale;
-  final ThemeData theme;
-  final RequestStore store;
-
   const RequestPage({
     super.key,
     required this.currentUser,
@@ -20,13 +13,17 @@ class RequestPage extends StatefulWidget {
     required this.theme,
     required this.store,
   });
+  final Creator currentUser;
+  final I18n locale;
+  final ThemeData theme;
+  final RequestStore store;
 
   @override
   State<RequestPage> createState() => _RequestPageState();
 }
 
 class _RequestPageState extends State<RequestPage> {
-  String _searchQuery = "";
+  String _searchQuery = '';
   RequestStatus? _selectedStatus;
 
   List<RequestItem> _filterRequests(List<RequestItem> requestList) {
@@ -51,7 +48,6 @@ class _RequestPageState extends State<RequestPage> {
   void _onAddRequest() {
     showRequestFormPage(
       context,
-      request: null,
       locale: widget.locale,
       onSave: (RequestItem item) {
         AddRequest(item);
@@ -67,7 +63,8 @@ class _RequestPageState extends State<RequestPage> {
   }
 
   Future<void> _onRefresh() async {
-    await Future.delayed(const Duration(seconds: 1));
+    // TODO: implement on refresh
+    await Future<void>.delayed(const Duration(seconds: 1));
   }
 
   void _onEditRequest(RequestItem request) {
@@ -96,10 +93,7 @@ class _RequestPageState extends State<RequestPage> {
   }
 
   void _onVoteChange(RequestItem request) {
-    UpdateVote(
-      request.id,
-      Vote(userId: widget.currentUser.userId),
-    );
+    UpdateVote(request.id, Vote(userId: widget.currentUser.userId));
   }
 
   @override
@@ -108,45 +102,40 @@ class _RequestPageState extends State<RequestPage> {
       store: widget.store,
       child: LocalizationProvider(
         locale: widget.locale,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(context.locale.page_title),
-          ),
-          body: SafeArea(
-            child: Column(
-              children: [
-                SearchField(
-                  onSearchChanged: _onSearchChanged,
-                  onAddRequest: _onAddRequest,
-                  selectedStatus: _selectedStatus,
-                  onStatusSelected: _onStatusSelected,
+        child: SafeArea(
+          child: Column(
+            children: [
+              SearchField(
+                onSearchChanged: _onSearchChanged,
+                onAddRequest: _onAddRequest,
+                selectedStatus: _selectedStatus,
+                onStatusSelected: _onStatusSelected,
+              ),
+              Expanded(
+                child: VxBuilder<RequestStore>(
+                  mutations: const {
+                    AddRequest,
+                    DeleteRequest,
+                    UpdateRequest,
+                    UpdateVote,
+                    AddComment,
+                  },
+                  builder: (__, store, _) {
+                    final filteredRequestList = _filterRequests(
+                      store.requests,
+                    );
+                    return RequestListWidget(
+                      currentUserId: widget.currentUser.userId,
+                      requestList: filteredRequestList,
+                      onRefresh: _onRefresh,
+                      onLongPress: _onEditRequest,
+                      onRequestSelected: _onRequestSelected,
+                      onVoteChange: _onVoteChange,
+                    );
+                  },
                 ),
-                Expanded(
-                  child: VxBuilder<RequestStore>(
-                    mutations: const {
-                      AddRequest,
-                      DeleteRequest,
-                      UpdateRequest,
-                      UpdateVote,
-                      AddComment
-                    },
-                    builder: (context, store, _) {
-                      final filteredRequestList = _filterRequests(
-                        store.requests,
-                      );
-                      return RequestListWidget(
-                        currentUserId: widget.currentUser.userId,
-                        requestList: filteredRequestList,
-                        onRefresh: _onRefresh,
-                        onLongPress: _onEditRequest,
-                        onRequestSelected: _onRequestSelected,
-                        onVoteChange: _onVoteChange,
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

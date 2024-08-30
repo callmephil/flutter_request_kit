@@ -13,6 +13,11 @@ class RequestApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Request Kit Demo',
       theme: RequestCustomTheme.defaultTheme.copyWith(
+        extensions: [
+          const RequestStatusPillTheme(),
+          const RequestVotingBoxTheme(),
+          const RequestItemCardTheme(),
+        ],
         primaryColor: Colors.blue,
         primaryColorLight: Colors.lightBlue,
         primaryColorDark: Colors.blue[900],
@@ -65,11 +70,16 @@ class _RequestHomePageState extends State<RequestHomePage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: RequestPage(
-        currentUser: currentUser,
-        store: store,
-        locale: RequestKitLocales.enUS.locale,
-        theme: Theme.of(context),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter Request Kit Demo'),
+        ),
+        body: RequestPage(
+          currentUser: currentUser,
+          store: store,
+          locale: RequestKitLocales.enUS.locale,
+          theme: Theme.of(context),
+        ),
       ),
     );
   }

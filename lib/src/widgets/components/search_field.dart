@@ -4,11 +4,6 @@ import 'package:flutter_request_kit/src/extension/provider_extensions.dart';
 import 'package:flutter_request_kit/src/theme/request_sizes.dart';
 
 class SearchField extends StatelessWidget {
-  final Function(String) onSearchChanged;
-  final VoidCallback onAddRequest;
-  final RequestStatus? selectedStatus;
-  final Function(RequestStatus?) onStatusSelected;
-
   const SearchField({
     super.key,
     required this.onSearchChanged,
@@ -16,6 +11,11 @@ class SearchField extends StatelessWidget {
     required this.selectedStatus,
     required this.onStatusSelected,
   });
+
+  final void Function(String) onSearchChanged;
+  final VoidCallback onAddRequest;
+  final RequestStatus? selectedStatus;
+  final void Function(RequestStatus?) onStatusSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +43,11 @@ class SearchField extends StatelessWidget {
                 style: theme.iconButtonTheme.style,
                 onPressed: onAddRequest,
                 icon: const Icon(Icons.add),
-              )
+              ),
             ],
           ),
           const SizedBox(height: RequestSizes.s8),
           Wrap(
-            alignment: WrapAlignment.start,
-            runAlignment: WrapAlignment.start,
             spacing: RequestSizes.s8,
             children: RequestStatus.values
                 .where((e) => e != RequestStatus.none)

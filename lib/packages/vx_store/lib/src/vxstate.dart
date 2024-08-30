@@ -1,15 +1,20 @@
+// ignore_for_file: prefer-match-file-name
+
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-part 'inherited_model.dart';
 part 'vxmutation.dart';
+part 'vxstatemodel.dart';
 
 /// VxWidgetBuilder gives context and status back.
 /// Status are more useful when you use vx effects
 typedef VxStateWidgetBuilder<T> = Widget Function(
-    BuildContext context, T store, VxStatus? status);
+  BuildContext context,
+  T store,
+  VxStatus? status,
+);
 
 /// Status about the current state
 // ignore: public_member_api_docs
@@ -22,6 +27,17 @@ abstract class VxStore {}
 /// The coordinating widget that keeps track of mutations
 /// and the notify the same to the listening widgets.
 class VxState extends StatelessWidget {
+  /// Constructor collects the store instance and interceptors.
+  VxState({
+    super.key,
+    required VxStore store,
+    required this.child,
+    List<VxInterceptor> interceptors = const [],
+  }) {
+    VxState._store = store;
+    VxState._interceptors = interceptors;
+  }
+
   /// App's root widget
   final Widget? child;
 
@@ -67,7 +83,7 @@ class VxState extends StatelessWidget {
   /// When a mutation specified execute widget will rebuild.
   static void watch(BuildContext context, {required List<Type> on}) {
     for (final mutant in on) {
-      context.dependOnInheritedWidgetOfExactType<_VxStateModel>(
+      context.dependOnInheritedWidgetOfExactType<VxStateModel>(
         aspect: mutant,
       );
     }
@@ -77,31 +93,24 @@ class VxState extends StatelessWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     events.forEach((element) {
-      properties.add(DiagnosticsProperty(
-          element.runtimeType.toString(), element.store.toString()));
+      properties.add(
+        DiagnosticsProperty(
+          element.runtimeType.toString(),
+          element.store?.toString(),
+        ),
+      );
     });
-  }
-
-  /// Constructor collects the store instance and interceptors.
-  VxState({
-    super.key,
-    required VxStore store,
-    required this.child,
-    List<VxInterceptor> interceptors = const [],
-  }) {
-    VxState._store = store;
-    VxState._interceptors = interceptors;
   }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _events.stream,
-      builder: (context, _) {
+      builder: (_, __) {
         // Copy all the mutations that executed before
         // current build and clear that buffer
         // ignore: prefer_typing_uninitialized_variables
-        var clone;
+        Set<Type>? clone;
         if (_buffer.isNotEmpty) {
           clone = <Type>{}..addAll(_buffer);
           _buffer.clear();
@@ -111,7 +120,7 @@ class VxState extends StatelessWidget {
 
         // Rebuild inherited model with all the mutations
         // inside "clone" as the aspects changed
-        return _VxStateModel(recent: clone, child: child!);
+        return VxStateModel(recent: clone, child: child!);
       },
     );
   }

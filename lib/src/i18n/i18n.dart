@@ -104,7 +104,7 @@ class FrFR extends I18n {
   String get none => 'Aucun';
 
   @override
-  String get just_now => 'À l\'instant';
+  String get just_now => "À l'instant";
 
   @override
   String get request_not_found => 'Demande non trouvée';

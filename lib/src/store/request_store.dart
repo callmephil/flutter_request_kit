@@ -1,4 +1,5 @@
 import 'package:flutter_request_kit/packages/vx_store/lib/vxstate.dart';
+import 'package:flutter_request_kit/src/extension/list_extensions.dart';
 import 'package:flutter_request_kit/src/models/models.dart';
 
 export 'package:flutter_request_kit/packages/vx_store/lib/vxstate.dart';
@@ -7,14 +8,6 @@ typedef RequestCallback = void Function(RequestItem request);
 typedef CommentCallback = void Function(Comment comment);
 
 class RequestStore extends VxStore {
-  List<RequestItem> requests = [];
-
-  final RequestCallback? onAddRequest;
-  final RequestCallback? onUpdateRequest;
-  final RequestCallback? onDeleteRequest;
-  final CommentCallback? onAddComment;
-  final RequestCallback? onVoteChange;
-
   RequestStore({
     this.requests = const [],
     this.onAddRequest,
@@ -23,32 +16,38 @@ class RequestStore extends VxStore {
     this.onAddComment,
     this.onVoteChange,
   });
+  List<RequestItem> requests = [];
+
+  final RequestCallback? onAddRequest;
+  final RequestCallback? onUpdateRequest;
+  final RequestCallback? onDeleteRequest;
+  final CommentCallback? onAddComment;
+  final RequestCallback? onVoteChange;
 }
 
 class AddRequest extends VxMutation<RequestStore> {
+  AddRequest(this.request);
   final RequestItem request;
 
-  AddRequest(this.request);
-
   @override
-  perform() {
+  void perform() {
     store?.requests.add(request);
     store?.onAddRequest?.call(request);
   }
 }
 
 class UpdateRequest extends VxMutation<RequestStore> {
+  UpdateRequest(this.id, this.updatedRequest);
   final String id;
   final RequestItem updatedRequest;
 
-  UpdateRequest(this.id, this.updatedRequest);
-
   @override
-  perform() {
+  void perform() {
     final index = store?.requests.indexWhere((item) => item.id == id);
     if (index == null || index == -1) return;
 
-    final existingRequest = store!.requests[index];
+    final existingRequest = store!.requests.elementAtOrNull(index);
+    if (existingRequest == null) return;
 
     // Merge existing comments and votes with the updated request
     final mergedRequest = updatedRequest.copyWith(
@@ -67,13 +66,12 @@ class UpdateRequest extends VxMutation<RequestStore> {
 }
 
 class DeleteRequest extends VxMutation<RequestStore> {
+  DeleteRequest(this.id);
   final String id;
 
-  DeleteRequest(this.id);
-
   @override
-  perform() {
-    final request = store?.requests.firstWhere((item) => item.id == id);
+  void perform() {
+    final request = store?.requests.firstWhereOrNull((item) => item.id == id);
     if (request == null) return;
 
     store?.requests.remove(request);
@@ -82,17 +80,18 @@ class DeleteRequest extends VxMutation<RequestStore> {
 }
 
 class AddComment extends VxMutation<RequestStore> {
+  AddComment(this.id, this.comment);
   final String id;
   final Comment comment;
 
-  AddComment(this.id, this.comment);
-
   @override
-  perform() {
-    final int? index = store?.requests.indexWhere((item) => item.id == id);
+  void perform() {
+    final index = store?.requests.indexWhere((item) => item.id == id);
     if (index == null || index == -1) return;
 
-    final request = store!.requests[index];
+    final request = store!.requests.elementAtOrNull(index);
+    if (request == null) return;
+
     final updatedRequest = request.copyWith(
       comments: [...request.comments, comment],
     );
@@ -103,19 +102,20 @@ class AddComment extends VxMutation<RequestStore> {
 }
 
 class UpdateVote extends VxMutation<RequestStore> {
+  UpdateVote(this.id, this.vote);
   final String id;
   final Vote vote;
 
-  UpdateVote(this.id, this.vote);
-
   @override
-  perform() {
-    final int? index = store?.requests.indexWhere((item) => item.id == id);
+  void perform() {
+    final index = store?.requests.indexWhere((item) => item.id == id);
     if (index == null || index == -1) return;
 
-    final request = store!.requests[index];
+    final request = store!.requests.elementAtOrNull(index);
+    if (request == null) return;
+
     // Create a new list from the existing votes to ensure it's modifiable
-    final List<Vote> updatedVotes = List<Vote>.from(request.votes);
+    final updatedVotes = List<Vote>.of(request.votes);
 
     if (updatedVotes.any((u) => u.userId == vote.userId)) {
       updatedVotes.removeWhere((u) => u.userId == vote.userId);

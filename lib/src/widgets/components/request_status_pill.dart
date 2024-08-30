@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_request_kit/src/enums/enums.dart';
 import 'package:flutter_request_kit/src/extension/provider_extensions.dart';
-import 'package:flutter_request_kit/src/theme/custom_theme.dart';
+import 'package:flutter_request_kit/src/theme/request_custom_theme.dart';
 import 'package:flutter_request_kit/src/theme/request_sizes.dart';
 
 class RequestStatusPill extends StatelessWidget {
@@ -21,6 +21,7 @@ class RequestStatusPill extends StatelessWidget {
           return theme?.completedColor ?? status.color;
         case RequestStatus.planned:
           return theme?.plannedColor ?? status.color;
+        // ignore: no_default_cases
         default:
           return status.color;
       }

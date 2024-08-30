@@ -3,16 +3,9 @@ import 'package:flutter_request_kit/src/extension/provider_extensions.dart';
 import 'package:flutter_request_kit/src/flutter_request_kit.dart';
 import 'package:flutter_request_kit/src/models/models.dart';
 import 'package:flutter_request_kit/src/theme/request_sizes.dart';
-import 'package:flutter_request_kit/src/widgets/components/request_item_card.dart';
+import 'package:flutter_request_kit/src/widgets/components/request_item_card/request_item_card.dart';
 
 class RequestListWidget extends StatelessWidget {
-  final List<RequestItem> requestList;
-  final String currentUserId;
-  final Future<void> Function() onRefresh;
-  final void Function(RequestItem) onRequestSelected;
-  final void Function(RequestItem) onVoteChange;
-  final void Function(RequestItem)? onLongPress;
-
   const RequestListWidget({
     super.key,
     required this.requestList,
@@ -22,6 +15,12 @@ class RequestListWidget extends StatelessWidget {
     required this.onVoteChange,
     this.onLongPress,
   });
+  final List<RequestItem> requestList;
+  final String currentUserId;
+  final Future<void> Function() onRefresh;
+  final void Function(RequestItem) onRequestSelected;
+  final void Function(RequestItem) onVoteChange;
+  final void Function(RequestItem)? onLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +40,10 @@ class RequestListWidget extends StatelessWidget {
         padding: const EdgeInsets.all(RequestSizes.s8),
         physics: const AlwaysScrollableScrollPhysics(),
         itemCount: requestList.length,
-        separatorBuilder: (context, index) {
+        separatorBuilder: (_, index) {
           return const SizedBox(height: RequestSizes.s16);
         },
-        itemBuilder: (context, index) {
+        itemBuilder: (_, index) {
           final request = requestList[index];
           return RequestItemCard(
             item: request,

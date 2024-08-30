@@ -10,7 +10,7 @@ class LocalizationProvider extends InheritedWidget {
   final I18n locale;
 
   static LocalizationProvider? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<LocalizationProvider>();
+    return context.dependOnInheritedWidgetOfExactType();
   }
 
   @override

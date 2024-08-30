@@ -10,23 +10,23 @@ void showRequestFormPage(
   BuildContext context, {
   required I18n locale,
   RequestItem? request,
-  required Function(RequestItem) onSave,
+  required void Function(RequestItem) onSave,
   void Function()? onDelete,
   required Creator creator,
 }) {
   Navigator.push(
     context,
-    MaterialPageRoute(
+    MaterialPageRoute<Widget>(
       builder: (_) {
         return LocalizationProvider(
           locale: locale,
           child: Builder(
-            builder: (context) {
+            builder: (ctx) {
               return RequestFormPage(
                 request: request,
-                onSave: (request) {
-                  onSave.call(request);
-                  Navigator.of(context).pop();
+                onSave: (newRequest) {
+                  onSave(newRequest);
+                  Navigator.of(ctx).pop();
                 },
                 onDelete: onDelete,
                 creator: creator,
@@ -40,11 +40,6 @@ void showRequestFormPage(
 }
 
 class RequestFormPage extends StatelessWidget {
-  final RequestItem? request;
-  final Function(RequestItem) onSave;
-  final VoidCallback? onDelete;
-  final Creator creator;
-
   const RequestFormPage({
     super.key,
     this.request,
@@ -52,6 +47,10 @@ class RequestFormPage extends StatelessWidget {
     this.onDelete,
     required this.creator,
   });
+  final RequestItem? request;
+  final void Function(RequestItem) onSave;
+  final VoidCallback? onDelete;
+  final Creator creator;
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +63,7 @@ class RequestFormPage extends StatelessWidget {
         ),
         actions: [
           if (onDelete != null)
-            IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: onDelete,
-            ),
+            IconButton(icon: const Icon(Icons.delete), onPressed: onDelete),
         ],
       ),
       body: SafeArea(
@@ -82,16 +78,15 @@ class RequestFormPage extends StatelessWidget {
 }
 
 class RequestFormWidget extends StatefulWidget {
-  final RequestItem? request;
-  final Function(RequestItem) onSave;
-  final Creator creator;
-
   const RequestFormWidget({
     super.key,
     this.request,
     required this.onSave,
     required this.creator,
   });
+  final RequestItem? request;
+  final void Function(RequestItem) onSave;
+  final Creator creator;
 
   @override
   State<RequestFormWidget> createState() => _RequestFormWidgetState();
@@ -112,6 +107,13 @@ class _RequestFormWidgetState extends State<RequestFormWidget> {
       _descriptionController.text = widget.request!.description;
       _status = widget.request!.status;
     }
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
   }
 
   void _onSubmit() {
@@ -136,7 +138,7 @@ class _RequestFormWidgetState extends State<RequestFormWidget> {
       widget.request == null ||
       widget.request!.creator.userId == widget.creator.userId;
 
-  String? Function(String?)? _validator(String message) {
+  String? Function(String?) _validator(String message) {
     return (value) {
       if (value?.isEmpty ?? false) {
         return message;
@@ -209,9 +211,11 @@ class _RequestFormWidgetState extends State<RequestFormWidget> {
                 alignment: Alignment.centerRight,
                 child: ElevatedButton(
                   onPressed: _onSubmit,
-                  child: Text(widget.request == null
-                      ? context.locale.add_request
-                      : context.locale.edit_request),
+                  child: Text(
+                    widget.request == null
+                        ? context.locale.add_request
+                        : context.locale.edit_request,
+                  ),
                 ),
               ),
           ],

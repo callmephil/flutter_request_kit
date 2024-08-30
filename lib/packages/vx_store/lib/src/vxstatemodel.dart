@@ -2,10 +2,9 @@ part of 'vxstate.dart';
 
 /// Tracks the listener widgets and notify them when
 /// their corresponding mutation executes
-class _VxStateModel extends InheritedModel {
+class VxStateModel extends InheritedModel<Widget> {
+  const VxStateModel({super.key, required super.child, this.recent});
   final Set<Type>? recent;
-
-  const _VxStateModel({required super.child, this.recent});
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) =>
@@ -13,7 +12,9 @@ class _VxStateModel extends InheritedModel {
 
   @override
   bool updateShouldNotifyDependent(
-      covariant InheritedModel oldWidget, Set dependencies) {
+    covariant InheritedModel<Widget> oldWidget,
+    Set<Widget> dependencies,
+  ) {
     // check if there is a mutation executed for which
     // dependent has listened
     return dependencies.intersection(recent!).isNotEmpty;

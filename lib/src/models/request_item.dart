@@ -3,16 +3,6 @@ import 'package:flutter_request_kit/flutter_request_kit.dart';
 
 @immutable
 class RequestItem {
-  final String id;
-  final Creator creator;
-  final String title;
-  final String description;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final List<Comment> comments;
-  final List<Vote> votes;
-  final RequestStatus status;
-
   const RequestItem({
     required this.id,
     required this.creator,
@@ -24,6 +14,36 @@ class RequestItem {
     this.votes = const [],
     this.status = RequestStatus.none,
   });
+
+  factory RequestItem.fromJson(Map<String, dynamic> json) {
+    return RequestItem(
+      id: json['id'] as String,
+      creator: Creator.fromJson(json['creator'] as Map<String, dynamic>),
+      title: json['title'] as String,
+      description: json['description'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String),
+      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      comments: (json['comments'] as List<Object?>).map<Comment>((comment) {
+        return Comment.fromJson(comment! as Map<String, dynamic>);
+      }).toList(growable: false),
+      votes: (json['votes'] as List<Object?>).map<Vote>((vote) {
+        return Vote.fromJson(vote! as Map<String, dynamic>);
+      }).toList(growable: false),
+      status: RequestStatus.values.firstWhere(
+        (e) => e.toString().split('.').lastOrNull == json['status'],
+      ),
+    );
+  }
+
+  final String id;
+  final Creator creator;
+  final String title;
+  final String description;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final List<Comment> comments;
+  final List<Vote> votes;
+  final RequestStatus status;
 
   RequestItem copyWith({
     String? id,
@@ -58,28 +78,9 @@ class RequestItem {
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
       'comments': comments.map((comment) => comment.toJson()).toList(),
-      'votes': votes.map((upvote) => upvote.toJson()).toList(),
+      'votes': votes.map((e) => e.toJson()).toList(),
       'status': status.name,
     };
-  }
-
-  static RequestItem fromJson(Map<String, dynamic> json) {
-    return RequestItem(
-      id: json['id'],
-      creator: Creator.fromJson(json['creator']),
-      title: json['title'],
-      description: json['description'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-      comments: (json['comments'] as List<dynamic>)
-          .map((item) => Comment.fromJson(item))
-          .toList(),
-      votes: (json['votes'] as List<dynamic>)
-          .map((item) => Vote.fromJson(item))
-          .toList(),
-      status: RequestStatus.values
-          .firstWhere((e) => e.toString().split('.').last == json['status']),
-    );
   }
 
   @override
@@ -113,6 +114,18 @@ class RequestItem {
 
   @override
   String toString() {
-    return 'RequestItem(id: $id, creator: $creator, title: $title, description: $description, createdAt: $createdAt, updatedAt: $updatedAt, comments: $comments, votes: $votes, status: $status)';
+    return '''
+    RequestItem(
+      id: $id, 
+      creator: $creator, 
+      title: $title, 
+      description: $description,
+      createdAt: $createdAt,
+      updatedAt: $updatedAt, 
+      comments: $comments, 
+      votes: $votes, 
+      status: $status
+    )
+    ''';
   }
 }

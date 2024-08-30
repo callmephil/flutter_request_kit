@@ -38,7 +38,6 @@ class RequestVotingBox extends StatelessWidget {
                 horizontal: RequestSizes.s8,
               ).copyWith(bottom: RequestSizes.s8),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -50,10 +49,7 @@ class RequestVotingBox extends StatelessWidget {
               Text(
                 item.votes.length.toString(),
                 style: theme?.textStyle ??
-                    const TextStyle(
-                      color: RequestColors.grey,
-                      height: 0.8,
-                    ),
+                    const TextStyle(color: RequestColors.grey, height: 0.8),
               ),
             ],
           ),

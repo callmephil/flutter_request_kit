@@ -12,7 +12,7 @@ void showRequestCommentsBottomSheet({
   required Creator currentUser,
   required I18n locale,
 }) {
-  showModalBottomSheet(
+  showModalBottomSheet<Widget>(
     context: context,
     useSafeArea: true,
     isScrollControlled: true,
@@ -24,8 +24,8 @@ void showRequestCommentsBottomSheet({
       return LocalizationProvider(
         locale: locale,
         child: Builder(
-          builder: (context) {
-            return RequestComments(
+          builder: (_) {
+            return RequestCommentsWidget(
               request: request,
               currentUser: currentUser,
               onAddComment: (comment) {
@@ -39,30 +39,29 @@ void showRequestCommentsBottomSheet({
   );
 }
 
-class RequestComments extends StatefulWidget {
-  final RequestItem request;
-  final Function(Comment)? onAddComment;
-  final Creator currentUser;
-
-  const RequestComments({
+class RequestCommentsWidget extends StatefulWidget {
+  const RequestCommentsWidget({
     super.key,
     required this.request,
     required this.currentUser,
     this.onAddComment,
   });
+  final RequestItem request;
+  final void Function(Comment)? onAddComment;
+  final Creator currentUser;
 
   @override
-  State<RequestComments> createState() => _RequestCommentsState();
+  State<RequestCommentsWidget> createState() => _RequestCommentsWidgetState();
 }
 
-class _RequestCommentsState extends State<RequestComments> {
+class _RequestCommentsWidgetState extends State<RequestCommentsWidget> {
   final TextEditingController commentController = TextEditingController();
   late List<Comment> _comments;
 
   @override
   void initState() {
     super.initState();
-    _comments = List.from(widget.request.comments);
+    _comments = List.of(widget.request.comments);
   }
 
   @override
@@ -123,12 +122,10 @@ class _RequestCommentsState extends State<RequestComments> {
                     : ListView.separated(
                         padding: const EdgeInsets.all(RequestSizes.s8),
                         itemCount: _comments.length,
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(
-                            height: RequestSizes.s8,
-                          );
+                        separatorBuilder: (_, index) {
+                          return const SizedBox(height: RequestSizes.s8);
                         },
-                        itemBuilder: (context, index) {
+                        itemBuilder: (_, index) {
                           final comment = _comments[index];
                           return ListTile(
                             title: Text.rich(

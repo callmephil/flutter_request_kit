@@ -2,13 +2,6 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class Comment {
-  final String id;
-  final String userId;
-  final String username;
-  final String content;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
   const Comment({
     required this.id,
     required this.userId,
@@ -17,6 +10,24 @@ class Comment {
     required this.createdAt,
     required this.updatedAt,
   });
+
+  factory Comment.fromJson(Map<String, dynamic> json) {
+    return Comment(
+      id: json['id'] as String,
+      userId: json['userId'] as String,
+      username: json['username'] as String,
+      content: json['content'] as String,
+      createdAt: DateTime.parse(json['createdAt'] as String? ?? ''),
+      updatedAt: DateTime.parse(json['updatedAt'] as String? ?? ''),
+    );
+  }
+
+  final String id;
+  final String userId;
+  final String username;
+  final String content;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   Comment copyWith({
     String? id,
@@ -47,17 +58,6 @@ class Comment {
     };
   }
 
-  static Comment fromJson(Map<String, dynamic> json) {
-    return Comment(
-      id: json['id'],
-      userId: json['userId'],
-      username: json['username'],
-      content: json['content'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-    );
-  }
-
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -83,6 +83,15 @@ class Comment {
 
   @override
   String toString() {
-    return 'Comment(id: $id, userId: $userId, username: $username, content: $content, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return '''
+    Comment(
+    id: $id, 
+    userId: $userId, 
+    username: $username, 
+    content: $content, 
+    createdAt: $createdAt, 
+    updatedAt: $updatedAt
+    )
+    ''';
   }
 }

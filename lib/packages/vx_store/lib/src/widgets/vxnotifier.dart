@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
-import '../vxstate.dart';
+import 'package:flutter_request_kit/packages/vx_store/lib/src/vxstate.dart';
 
 /// Function signature for the callback with context.
 typedef ContextCallback = void
@@ -12,21 +11,21 @@ typedef ContextCallback = void
 /// on execution of the mutations. Useful to show SnackBar or navigate
 /// to a different route after a mutation.
 class VxNotifier extends StatefulWidget {
+  /// [VxNotifier] make callbacks for given mutations
+  const VxNotifier({super.key, this.child, required this.mutations});
+
   /// Optional child widget
   final Widget? child;
 
   /// Map of mutations and their corresponding callback
   final Map<Type, ContextCallback> mutations;
 
-  /// [VxNotifier] make callbacks for given mutations
-  const VxNotifier({super.key, this.child, required this.mutations});
-
   @override
   State<VxNotifier> createState() => _VxNotifierState();
 }
 
 class _VxNotifierState extends State<VxNotifier> {
-  StreamSubscription? eventSub;
+  StreamSubscription<VxMutation>? eventSub;
 
   @override
   void initState() {

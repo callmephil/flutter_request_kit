@@ -7,7 +7,14 @@ typedef VxMutationBuilder = VxMutation Function();
 /// An implementation of this class holds the logic for updating the [VxStore].
 
 abstract class VxMutation<T extends VxStore?> {
-  /// Reference to the current instance of [Store]
+  /// A mutation logic inside [perform] is executed immediately after
+  /// creating an object of the mutation.
+  VxMutation() {
+    status = VxStatus.none;
+    _run();
+  }
+
+  /// Reference to the current instance of [store]
   T? get store => VxState.store as T?;
 
   /// Status of this current mutation
@@ -15,13 +22,6 @@ abstract class VxMutation<T extends VxStore?> {
 
   /// List of mutation to execute after current one.
   final List<VxMutationBuilder> _laterMutations = [];
-
-  /// A mutation logic inside [perform] is executed immediately after
-  /// creating an object of the mutation.
-  VxMutation() {
-    status = VxStatus.none;
-    _run();
-  }
 
   /// [_run] executes mutation.
   Future<void> _run() async {
@@ -49,7 +49,7 @@ abstract class VxMutation<T extends VxStore?> {
       // await that. And finally notify the widgets again about
       // the end of execution.
       if (result != null && this is VxEffects) {
-        final dynamic out = (this as VxEffects).fork(result);
+        final Object? out = (this as VxEffects).fork(result);
         if (out is Future) {
           await out;
         }
@@ -89,7 +89,7 @@ abstract class VxMutation<T extends VxStore?> {
   /// It can return any value. If it is a [Future] it will be awaited.
   /// If it is [VxEffects] object, result will be piped to its
   /// [VxEffects.fork] call.
-  dynamic perform();
+  Object? perform();
 
   /// [onException] callback receives all the errors with their [StackTrace].
   /// If assertions are on, which usually means app is in debug mode, then
@@ -97,7 +97,7 @@ abstract class VxMutation<T extends VxStore?> {
   /// the mutation implementation.
   void onException(dynamic e, StackTrace s) {
     var isAssertOn = false;
-    assert(isAssertOn = true);
+    assert(isAssertOn = true, 'vxmutation: Exception: $e');
     if (isAssertOn) {
       debugPrint(
         ['VxMutation: ', 'Exception: $e', 'Trace $s'].toString(),
@@ -112,7 +112,7 @@ abstract class VxMutation<T extends VxStore?> {
 /// will have a success or a fail side effect after request is complete.
 mixin VxEffects<ON> {
   /// Divide your branches from here to create a chain
-  dynamic fork(ON result);
+  ON fork(ON result);
 }
 
 /// Implementation of this class can be used to act before or after
