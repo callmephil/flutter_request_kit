@@ -5,7 +5,7 @@ import 'package:flutter_request_kit/src/models/models.dart';
 export 'package:flutter_request_kit/packages/vx_store/lib/vxstate.dart';
 
 typedef RequestCallback = void Function(RequestItem request);
-typedef AddRequestCallback = RequestItem? Function(RequestItem request);
+typedef AddRequestCallback = Future<RequestItem> Function(RequestItem request);
 typedef CommentCallback = void Function(Comment comment);
 
 class RequestStore extends VxStore {
@@ -32,8 +32,15 @@ class AddRequest extends VxMutation<RequestStore> {
 
   @override
   void perform() {
-    final data = store?.onAddRequest?.call(request);
-    store?.requests.add(data ?? request);
+    try {
+      final data =store?.onAddRequest?.call(request);
+      data?.then((it) {
+        store?.requests.add(it);
+      });
+    }
+    catch(e) {
+      rethrow;
+    }
   }
 }
 
