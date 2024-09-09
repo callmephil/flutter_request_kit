@@ -10,7 +10,7 @@ class RequestItemCardOwner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme.extension<RequestItemCardTheme>();
-
+// TODO: add translations
     return Text(
       'by $userName',
       style: theme?.ownerTextStyle ??

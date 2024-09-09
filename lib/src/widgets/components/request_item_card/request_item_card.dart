@@ -51,9 +51,13 @@ class RequestItemCard extends StatelessWidget {
                     RequestItemCardTitle(item: item),
                     RequestItemCardDescription(item: item),
                     const SizedBox(height: RequestSizes.s8),
-                    RequestItemCardCommentCount(item: item),
-                    const SizedBox(height: RequestSizes.s8),
-                    RequestItemCardOwner(userName: item.creator.username),
+                    Row(
+                      children: [
+                        RequestItemCardOwner(userName: item.creator.username),
+                        const SizedBox(width: RequestSizes.s8),
+                        RequestItemCardCommentCount(item: item),
+                      ],
+                    )
                   ],
                 ),
               ),

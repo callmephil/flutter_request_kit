@@ -39,7 +39,7 @@ void showRequestFormPage(
   );
 }
 
-class RequestFormPage extends StatelessWidget {
+class RequestFormPage extends StatefulWidget {
   const RequestFormPage({
     super.key,
     this.request,
@@ -54,31 +54,37 @@ class RequestFormPage extends StatelessWidget {
   final Creator creator;
 
   @override
+  State<RequestFormPage> createState() => _RequestFormPageState();
+}
+
+class _RequestFormPageState extends State<RequestFormPage> {
+  bool get canDelete =>
+      widget.creator.userId == widget.request?.creator.userId ||
+      widget.creator.isAdmin;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          request == null
+          widget.request == null
               ? context.locale.add_request
               : context.locale.edit_request,
         ),
-        actions: request != null
-            ? creator.userId == request?.creator.userId || creator.isAdmin
-                ? [
-                    if (onDelete != null)
+        actions: widget.request == null ? [] : !canDelete ? []
+                : [
+                    if (widget.onDelete != null)
                       IconButton(
                         icon: const Icon(Icons.delete),
-                        onPressed: onDelete,
+                        onPressed: widget.onDelete,
                       ),
-                  ]
-                : []
-            : [],
+                  ],
       ),
       body: SafeArea(
         child: RequestFormWidget(
-          request: request,
-          onSave: onSave,
-          creator: creator,
+          request: widget.request,
+          onSave: widget.onSave,
+          creator: widget.creator,
         ),
       ),
     );

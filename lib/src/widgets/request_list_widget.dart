@@ -22,6 +22,9 @@ class RequestListWidget extends StatelessWidget {
   final void Function(RequestItem) onVoteChange;
   final void Function(RequestItem)? onLongPress;
 
+ bool isOwner(Creator creator) => creator.userId  == currentUser.userId
+      || currentUser.isAdmin;
+
   @override
   Widget build(BuildContext context) {
     if (requestList.isEmpty) {
@@ -48,12 +51,11 @@ class RequestListWidget extends StatelessWidget {
           return RequestItemCard(
             item: request,
             onTap: () => onRequestSelected(request),
-            onLongPress: request.creator.userId  == currentUser.userId
-                || currentUser.isAdmin ? onLongPress == null
+            onLongPress: !isOwner(request.creator) || onLongPress == null
                 ? null
                 : () {
                     onLongPress?.call(request);
-                  } : null,
+                  },
             onVote: () => onVoteChange(request),
           );
         },
