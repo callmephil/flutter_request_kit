@@ -125,10 +125,10 @@ class _RequestPageState extends State<RequestPage> {
                       store.requests,
                     );
                     return RequestListWidget(
-                      currentUserId: widget.currentUser.userId,
+                      currentUser: widget.currentUser,
                       requestList: filteredRequestList,
                       onRefresh: _onRefresh,
-                      onLongPress: _onEditRequest,
+                      onLongPress:  _onEditRequest,
                       onRequestSelected: _onRequestSelected,
                       onVoteChange: _onVoteChange,
                     );

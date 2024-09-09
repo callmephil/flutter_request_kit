@@ -9,14 +9,14 @@ class RequestListWidget extends StatelessWidget {
   const RequestListWidget({
     super.key,
     required this.requestList,
-    required this.currentUserId,
+    required this.currentUser,
     required this.onRefresh,
     required this.onRequestSelected,
     required this.onVoteChange,
     this.onLongPress,
   });
   final List<RequestItem> requestList;
-  final String currentUserId;
+  final Creator currentUser;
   final Future<void> Function() onRefresh;
   final void Function(RequestItem) onRequestSelected;
   final void Function(RequestItem) onVoteChange;
@@ -48,11 +48,12 @@ class RequestListWidget extends StatelessWidget {
           return RequestItemCard(
             item: request,
             onTap: () => onRequestSelected(request),
-            onLongPress: onLongPress == null
+            onLongPress: request.creator.userId  == currentUser.userId
+                || currentUser.isAdmin ? onLongPress == null
                 ? null
                 : () {
                     onLongPress?.call(request);
-                  },
+                  } : null,
             onVote: () => onVoteChange(request),
           );
         },
