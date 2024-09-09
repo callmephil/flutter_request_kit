@@ -60,7 +60,10 @@ class _RequestHomePageState extends State<RequestHomePage> {
   late final store = RequestStore(
     requests: <RequestItem>[],
     onAddRequest: print,
-    onAddComment: print,
+    onAddComment: (requestId, comment) {
+      print(requestId);
+      print(comment);
+    },
     onDeleteRequest: print,
     onUpdateRequest: print,
     onVoteChange: print,
