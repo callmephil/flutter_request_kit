@@ -11,9 +11,11 @@ class RequestItemCardOwner extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme.extension<RequestItemCardTheme>();
 
-    return Text('by $userName',
-        style: theme?.ownerTextStyle ??
-            theme?.ownerTextStyle ??
-            context.theme.textTheme.labelSmall);
+    return Text(
+      'by $userName',
+      style: theme?.ownerTextStyle ??
+          theme?.ownerTextStyle ??
+          context.theme.textTheme.labelSmall,
+    );
   }
 }

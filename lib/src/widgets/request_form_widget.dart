@@ -47,6 +47,7 @@ class RequestFormPage extends StatelessWidget {
     this.onDelete,
     required this.creator,
   });
+
   final RequestItem? request;
   final void Function(RequestItem) onSave;
   final VoidCallback? onDelete;
@@ -66,7 +67,9 @@ class RequestFormPage extends StatelessWidget {
                 ? [
                     if (onDelete != null)
                       IconButton(
-                          icon: const Icon(Icons.delete), onPressed: onDelete),
+                        icon: const Icon(Icons.delete),
+                        onPressed: onDelete,
+                      ),
                   ]
                 : []
             : [],
@@ -89,6 +92,7 @@ class RequestFormWidget extends StatefulWidget {
     required this.onSave,
     required this.creator,
   });
+
   final RequestItem? request;
   final void Function(RequestItem) onSave;
   final Creator creator;
