@@ -61,10 +61,15 @@ class RequestFormPage extends StatelessWidget {
               ? context.locale.add_request
               : context.locale.edit_request,
         ),
-        actions: [
-          if (onDelete != null)
-            IconButton(icon: const Icon(Icons.delete), onPressed: onDelete),
-        ],
+        actions: request != null
+            ? creator.userId == request?.creator.userId || creator.isAdmin
+                ? [
+                    if (onDelete != null)
+                      IconButton(
+                          icon: const Icon(Icons.delete), onPressed: onDelete),
+                  ]
+                : []
+            : [],
       ),
       body: SafeArea(
         child: RequestFormWidget(
