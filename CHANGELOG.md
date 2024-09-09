@@ -8,3 +8,12 @@
 - Fixed typo in the readme
 - Added Repository (Github) url
 - Added Issue Tracker (Github) url
+
+## 0.0.3
+
+- Creator can now edit their requests.
+- Creator nickname is now shown in the request tile.
+- Comment id is now returned in the callback.
+- Request id is now provided by its callback.
+
+Thanks to @sarahzayat2019
