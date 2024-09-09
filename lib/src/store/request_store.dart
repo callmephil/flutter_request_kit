@@ -5,7 +5,7 @@ import 'package:flutter_request_kit/src/models/models.dart';
 export 'package:flutter_request_kit/packages/vx_store/lib/vxstate.dart';
 
 typedef RequestCallback = void Function(RequestItem request);
-typedef CommentCallback = void Function(Comment comment);
+typedef CommentCallback = void Function(String requestId, Comment comment);
 
 class RequestStore extends VxStore {
   RequestStore({
@@ -97,7 +97,7 @@ class AddComment extends VxMutation<RequestStore> {
     );
 
     store!.requests[index] = updatedRequest;
-    store?.onAddComment?.call(comment);
+    store?.onAddComment?.call(this.id, comment);
   }
 }
 
