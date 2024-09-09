@@ -9,18 +9,22 @@ class RequestListWidget extends StatelessWidget {
   const RequestListWidget({
     super.key,
     required this.requestList,
-    required this.currentUserId,
+    required this.currentUser,
     required this.onRefresh,
     required this.onRequestSelected,
     required this.onVoteChange,
     this.onLongPress,
   });
   final List<RequestItem> requestList;
-  final String currentUserId;
+  final Creator currentUser;
   final Future<void> Function() onRefresh;
   final void Function(RequestItem) onRequestSelected;
   final void Function(RequestItem) onVoteChange;
   final void Function(RequestItem)? onLongPress;
+
+ bool canEdit(Creator creator) => creator.userId  == currentUser.userId
+      || currentUser.isAdmin;
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +52,7 @@ class RequestListWidget extends StatelessWidget {
           return RequestItemCard(
             item: request,
             onTap: () => onRequestSelected(request),
-            onLongPress: onLongPress == null
+            onLongPress: !canEdit(request.creator) || onLongPress == null
                 ? null
                 : () {
                     onLongPress?.call(request);

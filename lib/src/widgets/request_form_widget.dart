@@ -47,10 +47,15 @@ class RequestFormPage extends StatelessWidget {
     this.onDelete,
     required this.creator,
   });
+
   final RequestItem? request;
   final void Function(RequestItem) onSave;
   final VoidCallback? onDelete;
   final Creator creator;
+
+  bool get canDelete =>
+      creator.userId == request?.creator.userId ||
+      creator.isAdmin;
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +66,14 @@ class RequestFormPage extends StatelessWidget {
               ? context.locale.add_request
               : context.locale.edit_request,
         ),
-        actions: [
-          if (onDelete != null)
-            IconButton(icon: const Icon(Icons.delete), onPressed: onDelete),
-        ],
+        actions: request == null || !canDelete ? []
+                : [
+                    if (onDelete != null)
+                      IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: onDelete,
+                      ),
+                  ],
       ),
       body: SafeArea(
         child: RequestFormWidget(
@@ -84,6 +93,7 @@ class RequestFormWidget extends StatefulWidget {
     required this.onSave,
     required this.creator,
   });
+
   final RequestItem? request;
   final void Function(RequestItem) onSave;
   final Creator creator;
