@@ -26,10 +26,12 @@ class RequestItemCardTheme extends ThemeExtension<RequestItemCardTheme> {
     this.titleTextStyle,
     this.descriptionTextStyle,
     this.commentsTextStyle,
+    this.ownerTextStyle,
     this.iconColor,
     this.iconSize,
     this.separatorText,
   });
+
   final Color? backgroundColor;
   final Color? borderColor;
   final double? borderWidth;
@@ -38,6 +40,7 @@ class RequestItemCardTheme extends ThemeExtension<RequestItemCardTheme> {
   final TextStyle? titleTextStyle;
   final TextStyle? descriptionTextStyle;
   final TextStyle? commentsTextStyle;
+  final TextStyle? ownerTextStyle;
   final Color? iconColor;
   final double? iconSize;
   final String? separatorText;
@@ -52,6 +55,7 @@ class RequestItemCardTheme extends ThemeExtension<RequestItemCardTheme> {
     TextStyle? titleTextStyle,
     TextStyle? descriptionTextStyle,
     TextStyle? commentsTextStyle,
+    TextStyle? ownerTextStyle,
     Color? iconColor,
     double? iconSize,
     String? separatorText,
@@ -65,6 +69,7 @@ class RequestItemCardTheme extends ThemeExtension<RequestItemCardTheme> {
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       descriptionTextStyle: descriptionTextStyle ?? this.descriptionTextStyle,
       commentsTextStyle: commentsTextStyle ?? this.commentsTextStyle,
+      ownerTextStyle: ownerTextStyle ?? this.ownerTextStyle,
       iconColor: iconColor ?? this.iconColor,
       iconSize: iconSize ?? this.iconSize,
       separatorText: separatorText ?? this.separatorText,
@@ -90,6 +95,8 @@ class RequestItemCardTheme extends ThemeExtension<RequestItemCardTheme> {
           TextStyle.lerp(descriptionTextStyle, other.descriptionTextStyle, t),
       commentsTextStyle:
           TextStyle.lerp(commentsTextStyle, other.commentsTextStyle, t),
+      ownerTextStyle:
+          TextStyle.lerp(commentsTextStyle, other.commentsTextStyle, t),
       iconColor: Color.lerp(iconColor, other.iconColor, t),
       iconSize: lerpDouble(iconSize, other.iconSize, t),
       separatorText: separatorText,
@@ -109,6 +116,7 @@ class RequestStatusPillTheme extends ThemeExtension<RequestStatusPillTheme> {
       horizontal: RequestSizes.s8,
     ),
   });
+
   final TextStyle? textStyle;
   final Color? inProgressColor;
   final Color? completedColor;
@@ -165,6 +173,7 @@ class RequestVotingBoxTheme extends ThemeExtension<RequestVotingBoxTheme> {
     this.iconColor,
     this.iconSize,
   });
+
   final Color? backgroundColor;
   final Color? borderColor;
   final double? borderWidth;
