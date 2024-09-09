@@ -59,7 +59,9 @@ class _RequestHomePageState extends State<RequestHomePage> {
 
   late final store = RequestStore(
     requests: <RequestItem>[],
-    onAddRequest: print,
+    onAddRequest: (item) async {
+      return item.copyWith(id: 'new_id');
+    },
     onAddComment: (requestId, comment) {
       print(requestId);
       print(comment);
