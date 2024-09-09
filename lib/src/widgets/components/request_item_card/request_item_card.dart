@@ -6,6 +6,7 @@ import 'package:flutter_request_kit/src/theme/request_custom_theme.dart';
 import 'package:flutter_request_kit/src/theme/request_sizes.dart';
 import 'package:flutter_request_kit/src/widgets/components/request_item_card/request_item_card_comment_count.dart';
 import 'package:flutter_request_kit/src/widgets/components/request_item_card/request_item_card_description.dart';
+import 'package:flutter_request_kit/src/widgets/components/request_item_card/request_item_card_owner.dart';
 import 'package:flutter_request_kit/src/widgets/components/request_item_card/request_item_card_title.dart';
 import 'package:flutter_request_kit/src/widgets/components/request_voting_box.dart';
 
@@ -51,6 +52,8 @@ class RequestItemCard extends StatelessWidget {
                     RequestItemCardDescription(item: item),
                     const SizedBox(height: RequestSizes.s8),
                     RequestItemCardCommentCount(item: item),
+                    const SizedBox(height: RequestSizes.s8),
+                    RequestItemCardOwner(userName: item.creator.username),
                   ],
                 ),
               ),
