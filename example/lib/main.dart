@@ -62,7 +62,10 @@ class _RequestHomePageState extends State<RequestHomePage> {
     onAddRequest: (item) async {
       return item.copyWith(id: 'new_id');
     },
-    onAddComment: print,
+    onAddComment: (requestId, comment) {
+      print(requestId);
+      print(comment);
+    },
     onDeleteRequest: print,
     onUpdateRequest: print,
     onVoteChange: print,
