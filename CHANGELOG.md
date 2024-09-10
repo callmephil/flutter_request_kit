@@ -17,3 +17,11 @@
 - Request id is now provided by its callback.
 
 Thanks to @sarahzayat2019
+
+## 0.0.4
+
+- Fixed for async operation while adding a request.
+- Fixed overflow issue on the title
+- Fixed padding for the description input.
+
+Thanks to @sarahzayat2019
