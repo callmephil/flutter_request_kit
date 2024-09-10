@@ -23,5 +23,6 @@ Thanks to @sarahzayat2019
 - Fixed for async operation while adding a request.
 - Fixed overflow issue on the title
 - Fixed padding for the description input.
+- Cleanup & Formatting
 
 Thanks to @sarahzayat2019

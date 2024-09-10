@@ -13,9 +13,7 @@ class RequestItemCardOwner extends StatelessWidget {
 // TODO: add translations
     return Text(
       'by $userName',
-      style: theme?.ownerTextStyle ??
-          theme?.ownerTextStyle ??
-          context.theme.textTheme.labelSmall,
+      style: theme?.ownerTextStyle ?? context.theme.textTheme.labelSmall,
     );
   }
 }

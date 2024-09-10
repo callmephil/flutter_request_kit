@@ -69,8 +69,8 @@ class _RequestHomePageState extends State<RequestHomePage> {
       return addRequest(item);
     },
     onAddComment: (requestId, comment) {
-      print(requestId);
-      print(comment);
+      debugPrint(requestId);
+      debugPrint(comment.toString());
     },
     onDeleteRequest: print,
     onUpdateRequest: print,
