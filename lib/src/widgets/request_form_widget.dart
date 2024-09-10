@@ -213,6 +213,9 @@ class _RequestFormWidgetState extends State<RequestFormWidget> {
                 maxLength: 500,
                 maxLines: 999,
                 maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.all(RequestSizes.s16),
+                ),
               ),
             ),
             const SizedBox(height: RequestSizes.s24),

@@ -57,10 +57,16 @@ class _RequestHomePageState extends State<RequestHomePage> {
     isAdmin: true,
   );
 
+  Future<RequestItem> addRequest(RequestItem item) async {
+    // Simulate a request to the server
+    await Future.delayed(const Duration(seconds: 1));
+    return item.copyWith(id: 'new_id');
+  }
+
   late final store = RequestStore(
     requests: <RequestItem>[],
     onAddRequest: (item) async {
-      return item.copyWith(id: 'new_id');
+      return addRequest(item);
     },
     onAddComment: (requestId, comment) {
       print(requestId);

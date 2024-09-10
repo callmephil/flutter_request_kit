@@ -57,7 +57,7 @@ class RequestItemCard extends StatelessWidget {
                         const SizedBox(width: RequestSizes.s8),
                         RequestItemCardCommentCount(item: item),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),
