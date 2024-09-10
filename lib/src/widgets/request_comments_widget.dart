@@ -151,19 +151,22 @@ class _RequestCommentsWidgetState extends State<RequestCommentsWidget> {
                         },
                       ),
               ),
-              TextField(
-                controller: commentController,
-                decoration: InputDecoration(
-                  hintText: context.locale.add_comment,
-                  suffixIcon: IconButton(
-                    onPressed: _onSubmit,
-                    icon: const Icon(Icons.send),
+              Padding(
+                padding: const EdgeInsets.all(RequestSizes.s12),
+                child: TextField(
+                  controller: commentController,
+                  decoration: InputDecoration(
+                    hintText: context.locale.add_comment,
+                    suffixIcon: IconButton(
+                      onPressed: _onSubmit,
+                      icon: const Icon(Icons.send),
+                    ),
+                    contentPadding: const EdgeInsets.all(RequestSizes.s12),
                   ),
-                  contentPadding: const EdgeInsets.all(RequestSizes.s12),
+                  onSubmitted: (_) {
+                    _onSubmit();
+                  },
                 ),
-                onSubmitted: (_) {
-                  _onSubmit();
-                },
               ),
             ],
           ),

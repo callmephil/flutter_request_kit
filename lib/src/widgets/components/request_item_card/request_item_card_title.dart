@@ -15,10 +15,13 @@ class RequestItemCardTitle extends StatelessWidget {
     final theme = context.theme.extension<RequestItemCardTheme>();
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          item.title,
-          style: theme?.titleTextStyle ?? context.theme.textTheme.titleLarge,
+        Flexible(
+          child: Text(
+            item.title,
+            style: theme?.titleTextStyle ?? context.theme.textTheme.titleLarge,
+          ),
         ),
         const SizedBox(width: RequestSizes.s4),
         Text(
