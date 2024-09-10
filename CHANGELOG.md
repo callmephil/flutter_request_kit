@@ -20,9 +20,14 @@ Thanks to @sarahzayat2019
 
 ## 0.0.4
 
-- Fixed for async operation while adding a request.
 - Fixed overflow issue on the title
 - Fixed padding for the description input.
 - Cleanup & Formatting
+- Thanks to @sarahzayat2019
+
+## 0.0.5
+
+- Cleanup & Formatting
+- Added async operation when adding a request
 
 Thanks to @sarahzayat2019

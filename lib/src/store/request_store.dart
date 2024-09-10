@@ -35,11 +35,10 @@ class AddRequest extends VxMutation<RequestStore> {
   Future<void> perform() async {
     try {
       final data = await store?.onAddRequest?.call(request);
-      if(data ==null) {
+      if (data == null) {
         throw Exception('Request not added');
       }
-      store?.requests =  [data, ...?store?.requests];
-
+      store?.requests = [data, ...?store?.requests];
     } catch (e) {
       rethrow;
     }
