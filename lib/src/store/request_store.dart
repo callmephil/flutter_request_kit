@@ -28,17 +28,19 @@ class RequestStore extends VxStore {
 
 class AddRequest extends VxMutation<RequestStore> {
   AddRequest(this.request);
+
   final RequestItem request;
 
   @override
-  void perform() {
+  Future<void> perform() async {
     try {
-      final data =store?.onAddRequest?.call(request);
-      data?.then((it) {
-        store?.requests.add(it);
-      });
-    }
-    catch(e) {
+      final data = await store?.onAddRequest?.call(request);
+      if(data ==null) {
+        throw Exception('Request not added');
+      }
+      store?.requests =  [data, ...?store?.requests];
+
+    } catch (e) {
       rethrow;
     }
   }
@@ -46,6 +48,7 @@ class AddRequest extends VxMutation<RequestStore> {
 
 class UpdateRequest extends VxMutation<RequestStore> {
   UpdateRequest(this.id, this.updatedRequest);
+
   final String id;
   final RequestItem updatedRequest;
 
