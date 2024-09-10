@@ -105,7 +105,7 @@ class AddComment extends VxMutation<RequestStore> {
     );
 
     store!.requests[index] = updatedRequest;
-    store?.onAddComment?.call(this.id, comment);
+    store?.onAddComment?.call(id, comment);
   }
 }
 
