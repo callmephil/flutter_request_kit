@@ -31,3 +31,7 @@ Thanks to @sarahzayat2019
 - Added async operation when adding a request
 
 Thanks to @sarahzayat2019
+
+## 0.0.6
+
+- file formatting for static analysis
