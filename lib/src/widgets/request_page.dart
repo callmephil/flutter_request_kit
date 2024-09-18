@@ -128,7 +128,7 @@ class _RequestPageState extends State<RequestPage> {
                       currentUser: widget.currentUser,
                       requestList: filteredRequestList,
                       onRefresh: _onRefresh,
-                      onLongPress:  _onEditRequest,
+                      onLongPress: _onEditRequest,
                       onRequestSelected: _onRequestSelected,
                       onVoteChange: _onVoteChange,
                     );

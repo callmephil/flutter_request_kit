@@ -22,9 +22,8 @@ class RequestListWidget extends StatelessWidget {
   final void Function(RequestItem) onVoteChange;
   final void Function(RequestItem)? onLongPress;
 
- bool canEdit(Creator creator) => creator.userId  == currentUser.userId
-      || currentUser.isAdmin;
-
+  bool canEdit(Creator creator) =>
+      creator.userId == currentUser.userId || currentUser.isAdmin;
 
   @override
   Widget build(BuildContext context) {
