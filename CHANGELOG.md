@@ -35,3 +35,7 @@ Thanks to @sarahzayat2019
 ## 0.0.6
 
 - file formatting for static analysis
+
+## 0.0.7
+
+- Request Store callbacks are now defined as FutureOr to prevent passed async operations to throw a warning.

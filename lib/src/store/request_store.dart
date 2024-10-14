@@ -1,12 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter_request_kit/packages/vx_store/lib/vxstate.dart';
 import 'package:flutter_request_kit/src/extension/list_extensions.dart';
 import 'package:flutter_request_kit/src/models/models.dart';
 
 export 'package:flutter_request_kit/packages/vx_store/lib/vxstate.dart';
 
-typedef RequestCallback = void Function(RequestItem request);
-typedef AddRequestCallback = Future<RequestItem> Function(RequestItem request);
-typedef CommentCallback = void Function(String requestId, Comment comment);
+typedef RequestCallback = FutureOr<void> Function(RequestItem request);
+typedef AddRequestCallback = FutureOr<RequestItem> Function(
+  RequestItem request,
+);
+typedef CommentCallback = FutureOr<void> Function(
+  String requestId,
+  Comment comment,
+);
 
 class RequestStore extends VxStore {
   RequestStore({

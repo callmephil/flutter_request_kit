@@ -1,6 +1,6 @@
 name: flutter_request_kit
 description: "A Flutter package that simplify the way you deal with feedbacks, feature requests and bugs in your app."
-version: 0.0.6
+version: 0.0.7
 homepage: https://flutter-request-kit.web.app
 repository: https://github.com/callmephil/flutter_request_kit
 issue_tracker: https://github.com/callmephil/flutter_request_kit/issues
