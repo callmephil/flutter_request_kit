@@ -59,6 +59,7 @@ class RequestFormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           request == null
@@ -75,11 +76,17 @@ class RequestFormPage extends StatelessWidget {
                   ),
               ],
       ),
-      body: SafeArea(
-        child: RequestFormWidget(
-          request: request,
-          onSave: onSave,
-          creator: creator,
+      body: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        child: SafeArea(
+          child: SizedBox(
+            height: MediaQuery.sizeOf(context).height,
+            child: RequestFormWidget(
+              request: request,
+              onSave: onSave,
+              creator: creator,
+            ),
+          ),
         ),
       ),
     );
