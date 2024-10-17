@@ -39,3 +39,7 @@ Thanks to @sarahzayat2019
 ## 0.0.7
 
 - Request Store callbacks are now defined as FutureOr to prevent passed async operations to throw a warning.
+
+## 0.0.8
+
+- Fixed description field shrinking in request form on mobile
