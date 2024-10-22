@@ -6,6 +6,7 @@ export 'models/request_item.dart';
 export 'models/vote.dart';
 export 'store/request_store.dart';
 export 'theme/request_custom_theme.dart';
+export 'widgets/request_form_page.dart';
 export 'widgets/request_form_widget.dart';
 export 'widgets/request_list_widget.dart';
 export 'widgets/request_page.dart';

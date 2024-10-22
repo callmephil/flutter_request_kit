@@ -43,3 +43,8 @@ Thanks to @sarahzayat2019
 ## 0.0.8
 
 - Fixed description field shrinking in request form on mobile
+
+## 0.0.9
+
+- Fixed theme data not being loaded from widget params.
+- Added some spacing to the form widget between the labels and text fields

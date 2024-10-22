@@ -98,44 +98,47 @@ class _RequestPageState extends State<RequestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return VxState(
-      store: widget.store,
-      child: LocalizationProvider(
-        locale: widget.locale,
-        child: SafeArea(
-          child: Column(
-            children: [
-              SearchField(
-                onSearchChanged: _onSearchChanged,
-                onAddRequest: _onAddRequest,
-                selectedStatus: _selectedStatus,
-                onStatusSelected: _onStatusSelected,
-              ),
-              Expanded(
-                child: VxBuilder<RequestStore>(
-                  mutations: const {
-                    AddRequest,
-                    DeleteRequest,
-                    UpdateRequest,
-                    UpdateVote,
-                    AddComment,
-                  },
-                  builder: (__, store, _) {
-                    final filteredRequestList = _filterRequests(
-                      store.requests,
-                    );
-                    return RequestListWidget(
-                      currentUser: widget.currentUser,
-                      requestList: filteredRequestList,
-                      onRefresh: _onRefresh,
-                      onLongPress: _onEditRequest,
-                      onRequestSelected: _onRequestSelected,
-                      onVoteChange: _onVoteChange,
-                    );
-                  },
+    return Theme(
+      data: widget.theme,
+      child: VxState(
+        store: widget.store,
+        child: LocalizationProvider(
+          locale: widget.locale,
+          child: SafeArea(
+            child: Column(
+              children: [
+                SearchField(
+                  onSearchChanged: _onSearchChanged,
+                  onAddRequest: _onAddRequest,
+                  selectedStatus: _selectedStatus,
+                  onStatusSelected: _onStatusSelected,
                 ),
-              ),
-            ],
+                Expanded(
+                  child: VxBuilder<RequestStore>(
+                    mutations: const {
+                      AddRequest,
+                      DeleteRequest,
+                      UpdateRequest,
+                      UpdateVote,
+                      AddComment,
+                    },
+                    builder: (__, store, _) {
+                      final filteredRequestList = _filterRequests(
+                        store.requests,
+                      );
+                      return RequestListWidget(
+                        currentUser: widget.currentUser,
+                        requestList: filteredRequestList,
+                        onRefresh: _onRefresh,
+                        onLongPress: _onEditRequest,
+                        onRequestSelected: _onRequestSelected,
+                        onVoteChange: _onVoteChange,
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

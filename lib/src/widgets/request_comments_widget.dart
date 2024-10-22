@@ -92,84 +92,84 @@ class _RequestCommentsWidgetState extends State<RequestCommentsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: RequestSizes.borderRadius32,
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-          elevation: RequestSizes.zero,
-          shape: const RoundedRectangleBorder(
-            borderRadius: RequestSizes.borderRadius16,
-          ),
-          title: Text(
-            context.locale.comments,
-            style: context.theme.textTheme.titleMedium,
-          ),
+    final theme = context.theme;
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+        leading: IconButton(
+          onPressed: Navigator.of(context).pop,
+          icon: const Icon(Icons.close),
         ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                child: _comments.isEmpty
-                    ? Center(
-                        child: Text(
-                          context.locale.no_comments,
-                          style: context.theme.textTheme.labelLarge,
-                        ),
-                      )
-                    : ListView.separated(
-                        padding: const EdgeInsets.all(RequestSizes.s8),
-                        itemCount: _comments.length,
-                        separatorBuilder: (_, index) {
-                          return const SizedBox(height: RequestSizes.s8);
-                        },
-                        itemBuilder: (_, index) {
-                          final comment = _comments[index];
-                          return ListTile(
-                            title: Text.rich(
-                              TextSpan(
-                                text: comment.username,
-                                style: context.theme.textTheme.titleSmall,
-                                children: [
-                                  const WidgetSpan(
-                                    child: SizedBox(width: RequestSizes.s8),
-                                  ),
-                                  TextSpan(
-                                    text: comment.createdAt.toRequestDateTime,
-                                    style: context.theme.textTheme.labelSmall
-                                        ?.copyWith(
-                                      fontWeight: FontWeight.w200,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            subtitle: Text(comment.content),
-                          );
-                        },
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: theme.appBarTheme.backgroundColor,
+        foregroundColor: theme.appBarTheme.foregroundColor,
+        elevation: RequestSizes.zero,
+        shape: theme.appBarTheme.shape,
+        title: Text(context.locale.comments),
+        titleTextStyle:
+            theme.appBarTheme.titleTextStyle ?? theme.textTheme.titleMedium,
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: _comments.isEmpty
+                  ? Center(
+                      child: Text(
+                        context.locale.no_comments,
+                        style: context.theme.textTheme.labelLarge,
                       ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(RequestSizes.s12),
-                child: TextField(
-                  controller: commentController,
-                  decoration: InputDecoration(
-                    hintText: context.locale.add_comment,
-                    suffixIcon: IconButton(
-                      onPressed: _onSubmit,
-                      icon: const Icon(Icons.send),
+                    )
+                  : ListView.separated(
+                      padding: const EdgeInsets.all(RequestSizes.s8),
+                      itemCount: _comments.length,
+                      separatorBuilder: (_, index) {
+                        return const SizedBox(height: RequestSizes.s8);
+                      },
+                      itemBuilder: (_, index) {
+                        final comment = _comments[index];
+                        return ListTile(
+                          title: Text.rich(
+                            TextSpan(
+                              text: comment.username,
+                              style: context.theme.textTheme.titleSmall,
+                              children: [
+                                const WidgetSpan(
+                                  child: SizedBox(width: RequestSizes.s8),
+                                ),
+                                TextSpan(
+                                  text: comment.createdAt.toRequestDateTime,
+                                  style: context.theme.textTheme.labelSmall
+                                      ?.copyWith(
+                                    fontWeight: FontWeight.w200,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          subtitle: Text(comment.content),
+                        );
+                      },
                     ),
-                    contentPadding: const EdgeInsets.all(RequestSizes.s12),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(RequestSizes.s12),
+              child: TextField(
+                controller: commentController,
+                decoration: InputDecoration(
+                  hintText: context.locale.add_comment,
+                  suffixIcon: IconButton(
+                    onPressed: _onSubmit,
+                    icon: const Icon(Icons.send),
                   ),
-                  onSubmitted: (_) {
-                    _onSubmit();
-                  },
+                  contentPadding: const EdgeInsets.all(RequestSizes.s12),
                 ),
+                onSubmitted: (_) {
+                  _onSubmit();
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
