@@ -68,6 +68,8 @@ class UpdateRequest extends VxMutation<RequestStore> {
 
     // Merge existing comments and votes with the updated request
     final mergedRequest = updatedRequest.copyWith(
+      creator: existingRequest.creator,
+      createdAt: existingRequest.createdAt,
       comments: updatedRequest.comments.isEmpty
           ? existingRequest.comments
           : updatedRequest.comments,

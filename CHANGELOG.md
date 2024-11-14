@@ -48,3 +48,8 @@ Thanks to @sarahzayat2019
 
 - Fixed theme data not being loaded from widget params.
 - Added some spacing to the form widget between the labels and text fields
+
+## 0.0.10
+
+- Fix equality in lists with listEquals on request_item model.
+- Fix creator overwrite when updating a request.

@@ -94,8 +94,8 @@ class RequestItem {
         other.description == description &&
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt &&
-        other.comments == comments &&
-        other.votes == votes &&
+        listEquals(other.comments, comments) &&
+        listEquals(other.votes, votes) &&
         other.status == status;
   }
 
