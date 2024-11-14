@@ -55,7 +55,7 @@ class _RequestFormWidgetState extends State<RequestFormWidget> {
         updatedAt: DateTime.now(),
         status: widget.creator.isAdmin
             ? _status
-            : widget.request?.status ?? RequestStatus.none,
+            : (widget.request?.status ?? RequestStatus.none),
       );
       widget.onSave(request);
     }
